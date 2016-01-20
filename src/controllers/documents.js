@@ -62,6 +62,16 @@ module.exports = {
                 res.send(data);
             });
         });
+    },
+    delete: (req, res) => {
+        var id = req.params.file,
+            backURL = req.header('Referer') || '/';
+
+        models.Document.findById(id, (err, document) => {
+            document.remove();
+            fs.unlinkSync(config.archiveDir + '/' + document.fileName);
+            res.redirect(backURL);
+        });
     }
 }
 

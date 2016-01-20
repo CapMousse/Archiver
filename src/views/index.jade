@@ -24,6 +24,7 @@ html
             - if (documents)
                 table.table.table-striped
                     thead
+                        th
                         th Name
                         th Date
                         th Content
@@ -32,14 +33,17 @@ html
                         each document in documents
                             tr
                                 td
+                                    a(href="/delete/"+document._id, target="_blanck", onclick="return confirm('Are you sure to delete this document ?')")
+                                        i.fa.fa-trash
+                                td
                                     - if (document.name.length > 50)
                                         =document.name.substring(0, 47)+"..."
                                     - else
                                         =document.name
                                 td=moment(document.dateCreation).format("DD/MM/YYYY, HH:mm")
                                 td=document.content.substring(0, 50)+"..."
-                                td
-                                    a(href="/download/"+document._id, target="_blanck")
+                                td.text-center
+                                    a(href="/download/"+document._id)
                                         i.fa.fa-file-pdf-o
             - else
                 div No documents found
