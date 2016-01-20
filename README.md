@@ -1,12 +1,12 @@
 # Archiver
 
-*Archiver* is a tool to eradicate paper.\
+*Archiver* is a tool to eradicate paper.
 *Archiver* can store and search on your documents like bills, taxes, fines, loan ... or any PDF.
 
 ## Warning
 
-**This project is not responsible for any data/paper loss.**\
-**This project was made only to be used on *local* network, like on a NAS, and don't integrate any security (for the moment)**
+**This project is not responsible for any data/paper loss.**
+**This project was made only to be used on *local* network, like on a NAS, and doesn't integrate any security (for the moment)**
 
 
 ## Requirements
@@ -18,7 +18,6 @@
 ```
 npm install archiver
 ```
-Or clone the repository
 
 ## Configuration
 
