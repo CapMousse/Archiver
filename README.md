@@ -1,7 +1,6 @@
 # Archiver
 
-*Archiver* is a tool to eradicate paper.
-*Archiver* can store and search on your documents like bills, taxes, fines, loan ... or any PDF.
+*Archiver* is a tool to eradicate paper with minimal setup. It can store and search on your documents like bills, taxes, fines, loan ... or any PDF.
 
 ## Warning
 
@@ -10,18 +9,17 @@
 
 
 ## Requirements
+- Nodejs
 - Mongodb
 - Tesseract (tesseract-ocr on apt)
 - ImageMagick
 
 ## Installation
-```
-npm install archiver
-```
+Clone the current repository and install all requirements.
 
 ## Configuration
 
-In the `config.js` file :
+Copy the `config.example.js` as `config.js`, then in the `config.js` file :
 - Set `port` to the port you want to use for the web interface
 - Set `scanDir` to the directory where you will send new file to scan
 - Set `archiveDir` to the directory where you want *Archiver* to store all your files

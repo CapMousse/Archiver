@@ -2,13 +2,21 @@
   "name": "archiver",
   "version": "0.1.0",
   "description": "An utility do eradicate paper",
+  "url": "https://github.com/CapMousse/Archiver",
+  "bugs": {
+    "url": "https://github.com/CapMousse/Archiver/issues"
+  },
   "main": "src/server.js",
   "scripts": {
     "start": "node src/server.js",
     "watch": "node src/watcher.js"
   },
-  "author": "Capitaine Mousse",
-  "license": "ISC",
+  "author": {
+    "name" : "Jérémy Barbe",
+    "email": "capitaine.mousse@gmail.com",
+    "url": "http://capitaine-mousse.fr"
+  },
+  "license": "ISC", 
   "dependencies": {
     "body-parser": "^1.14.2",
     "chokidar": "^1.4.2",
