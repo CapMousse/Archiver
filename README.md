@@ -9,13 +9,17 @@
 
 
 ## Requirements
-- Nodejs
+- Nodejs >= 4
 - Mongodb
 - Tesseract (tesseract-ocr on apt)
 - ImageMagick
 
 ## Installation
-Clone the current repository and install all requirements.
+Clone the current repository and install all requirements. Then run :
+
+```
+npm install
+```
 
 ## Configuration
 
