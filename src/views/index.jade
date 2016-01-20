@@ -33,7 +33,7 @@ html
                         each document in documents
                             tr
                                 td
-                                    a(href="/delete/"+document._id, target="_blanck", onclick="return confirm('Are you sure to delete this document ?')")
+                                    a(href="/delete/"+document._id, onclick="return confirm('Are you sure to delete this document ?')")
                                         i.fa.fa-trash
                                 td
                                     - if (document.name.length > 50)
