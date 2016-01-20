@@ -1,0 +1,15 @@
+mixin pagination(start, numPages, curr, base)
+    - start    = start    || 1
+    - numPages = numPages || 10
+    - curr     = curr     || 1
+    - base     = base     || '#' 
+    nav.text-center
+        ul.pagination
+            - for(var i=start;i<start+numPages;i++) {
+                - if(i==curr)
+                    li.active
+                        a(href='#{base}#{i}') #{i}
+                - else
+                    li
+                        a(href='#{base}#{i}') #{i}
+            - }

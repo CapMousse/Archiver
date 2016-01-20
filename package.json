@@ -1,0 +1,22 @@
+{
+  "name": "archiver",
+  "version": "0.1.0",
+  "description": "An utility do eradicate paper",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "watch": "node src/watcher.js"
+  },
+  "author": "Capitaine Mousse",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.14.2",
+    "chokidar": "^1.4.2",
+    "express": "^4.13.3",
+    "express-session": "^1.13.0",
+    "glob": "^6.0.4",
+    "jade": "^1.11.0",
+    "moment": "^2.11.1",
+    "mongoose": "^4.3.6"
+  }
+}
