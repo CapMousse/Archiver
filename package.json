@@ -1,7 +1,7 @@
 {
   "name": "archiver",
-  "version": "0.2.1",
-  "description": "An utility do eradicate paper",
+  "version": "0.3.0",
+  "description": "An utility to eradicate paper",
   "url": "https://github.com/CapMousse/Archiver",
   "bugs": {
     "url": "https://github.com/CapMousse/Archiver/issues"

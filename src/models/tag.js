@@ -3,8 +3,6 @@ var mongoose = require('mongoose'),
 
 module.exports = new Schema({
     name: String,
-    fileName: String,
-    dateCreation: { type: Date, default: Date.now },
-    content: String,
-    tags: [String]
+    filter: String,
+    isRegexp: Boolean
 });

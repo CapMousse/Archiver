@@ -1,0 +1,37 @@
+extends ../index.jade
+
+block content
+    h3 Create a new tag
+    br
+    form(action="#", method="post")#tagForm.form-horizontal
+        .form-group
+            label.col-sm-2.control-label Name
+            div.col-sm-10
+                input(type="text", name="name").form-control
+        .form-group
+            label.col-sm-2.control-label Filter
+            div.col-sm-10
+                input(type="text", name="filter").form-control
+        .form-group
+            div.col-sm-offset-2.col-sm-10
+                label
+                    input(type="checkbox", name="regexp")
+                    |  Is Regexp ?
+        .form-group
+            div.col-sm-offset-2.col-sm-10
+                button(type="submit").btn.btn-success Save
+
+    script.
+        document.querySelector('#tagForm').addEventListener("submit", function (event) {
+            var isRegexp = document.querySelector("input[name='regexp']").checked,
+                filter = document.querySelector("input[name='filter']").value;
+
+            if (isRegexp) {
+                try {
+                    new RegExp(filter);
+                } catch (error) {
+                    alert("Invalid regular expression");
+                    return false;
+                }
+            }
+        }, false);

@@ -1,5 +1,17 @@
 # Change Log
 
+## 0.3.0 - 2015-01-20
+### Added
+- Tags management
+- Document auto taging
+- Search with filters (`tags:/content:/name:`)
+
+### Changed
+- Refactor layout and views
+
+### Fixed
+- search not using global marker
+
 ## 0.2.1 - 2015-01-20
 ### Fixed
 - Delete link opening new window

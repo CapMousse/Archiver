@@ -4,7 +4,8 @@ var fs          = require('fs'),
     session     = require('express-session'),
     bodyParser  = require('body-parser');
     app         = express(),
-    documents   = require(__dirname + '/controllers/documents.js')
+    documents   = require(__dirname + '/controllers/documents.js'),
+    tags        = require(__dirname + '/controllers/tags.js');
 
 app.use(session({
     secret: 'archiver',
@@ -19,12 +20,19 @@ app.set('view engine', 'jade');
 app.locals.moment = require('moment');
 
 app.get('/', documents.list);
-app.get('/page/:page', documents.list)
+app.get('/page/:page', documents.list);
 app.post('/search', documents.search);
 app.get('/search', documents.search);
 app.get('/search/page/:page', documents.search);
 app.get('/download/:file', documents.download);
 app.get('/delete/:file', documents.delete);
+
+app.get('/tags', tags.list);
+app.get('/tags/page/:page', tags.list);
+app.get('/tags/create', tags.create);
+app.post('/tags/create', tags.create);
+app.get('/tags/delete/:tag', tags.delete);
+app.get('/tags/scan/:tag', tags.scan);
 
 app.listen(config.port, () => {
     console.log('Archiver server runing on port '+config.port);

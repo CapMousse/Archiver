@@ -7,6 +7,7 @@ var os           = require('os'),
     db           = require(__dirname + '/utils/mongodb.js'),
     models       = require(__dirname + '/models'),
     config       = require(__dirname + '/../config.js'),
+    stringUtil   = require(__dirname + "/utils/string.js"),
     watcher      = chokidar.watch(config.scanDir + "/*.pdf", { awaitWriteFinish : true });
 
 var tmpDir = os.tmpdir() + '/archiver'
@@ -27,28 +28,44 @@ watcher.on('add', (filePath, infos) => {
         if (error) { return console.log(stderr); }
 
         glob(tmpDir + "/**/" + date + '-' + format.name + "*", { nodir: true }, (err, files) => {
-            var data = "";
+            var data = "", docTags = [];
 
             files.forEach(file => {
                 data += childProcess.execSync("tesseract " + file + " stdout");
             });
 
-            models.Document.create({
-                name: format.name,
-                fileName: filename,
-                content: data
-            }, function (err) {
-                files.forEach(file => {
-                    fs.unlink(file);
+            models.Tag.find({}, (err, tags) => {
+                tags.forEach(tag => {
+                    var regexp = new RegExp(stringUtil.escapeRegExp(tag.filter))
+
+                    if (tag.isRegexp) {
+                        regexp = tag.filter.match(/^\/(.*?)\/([gim]*)$/);
+                        regexp = new RegExp(regexp[1], regexp[2]);
+                    }
+
+                    if (data.match(regexp)) {
+                        docTags.push(tag.name);
+                    }
                 });
 
-                if (err) {
-                    console.log(err);
-                    return;
-                }
+                models.Document.create({
+                    name: format.name,
+                    fileName: filename,
+                    content: data,
+                    tags: docTags
+                }, err => {
+                    files.forEach(file => {
+                        fs.unlink(file);
+                    });
 
-                fs.renameSync(filePath, newPath);
-            })
+                    if (err) {
+                        console.log(err);
+                        return;
+                    }
+
+                    fs.renameSync(filePath, newPath);
+                });
+            });
         });
     });
 });

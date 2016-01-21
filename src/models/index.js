@@ -1,6 +1,8 @@
 var mongoose = require(__dirname + '/../utils/mongodb.js'),
-	DocShema = require(__dirname + '/document.js');
+    DocSchema = require(__dirname + '/document.js'),
+    TagSchema = require(__dirname + '/tag.js');
 
 module.exports = {
-	Document: mongoose.model('Document', DocShema)
+    Document: mongoose.model('Document', DocSchema),
+    Tag: mongoose.model('Tag', TagSchema)
 };

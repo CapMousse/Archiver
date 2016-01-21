@@ -1,0 +1,49 @@
+extends ../index.jade
+
+block content
+    - if (documents.length)
+        table.table.table-striped
+            thead
+                th.hidden-xs
+                th Name
+                th Tags
+                th.hidden-xs Date
+                th.hidden-xs Content
+                th Open
+            tbody
+                each document in documents
+                    tr
+                        td.hidden-xs
+                            a(href="/delete/"+document._id, onclick="return confirm('Are you sure to delete this document ?')")
+                                i.fa.fa-trash
+                        td
+                            - if (document.name.length > 50)
+                                =document.name.substring(0, 47)+"..."
+                            - else
+                                =document.name
+                        td
+                            each tag in document.tags
+                                span.btn.btn-xs.btn-default.tag=tag
+                                |  
+                        td.hidden-xs=moment(document.dateCreation).format("DD/MM/YYYY, HH:mm")
+                        td.hidden-xs=document.content.substring(0, 50)+"..."
+                        td.text-center
+                            a(href="/download/"+document._id)
+                                i.fa.fa-file-pdf-o
+
+        include ../mixins/pagination
+        +pagination(start, numPages, curr, base)
+    - else
+        div No documents found
+
+    script.
+        var tags = document.querySelectorAll(".tag"),
+            searchInput = document.querySelector("input[name='search']"),
+            searchForm = document.querySelectorAll("form")[0];
+
+        for (var i = 0; i < tags.length; i++) {
+            tags[i].addEventListener('click', function(event) {
+                searchInput.value = "tags:"+event.target.textContent;
+                searchForm.submit();
+            });
+        }

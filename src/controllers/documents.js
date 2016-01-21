@@ -1,16 +1,13 @@
 var fs          = require('fs'),
     config      = require(__dirname + '/../../config.js'),
     db          = require(__dirname + '/../utils/mongodb.js'),
-    models      = require(__dirname + '/../models');
-
-function escapeRegExp (str) {
-  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-}
+    models      = require(__dirname + '/../models'),
+    stringUtil  = require(__dirname + '/../utils/string.js');
 
 function render (res, total, page, base, documents, search) {
     search = search || "";
 
-    res.render('index', {
+    res.render('documents/list', {
         numPages: Math.ceil(total/50),
         start: 1,
         curr: page,
@@ -35,14 +32,29 @@ module.exports = {
     search:(req, res) => {
         if (req.body.search) req.session.search = req.body.search;
 
+
         var search = req.session.search,
             page = req.params.page || 1,
+            filters = {}, 
+            i = 0, 
+            match, placeholder;
+
+        if (match = search.match(/([a-z]{1,}):([a-zA-Z0-9-_ ]+)/g)) {
+            for (; i < match.length; i++) {
+                placeholder = match[i].split(":");
+
+                if (placeholder[0] == "tag") placeholder[0] = "tags"; 
+                if (placeholder[0] == "tags") placeholder[1] = placeholder[1].replace(",", "|");
+                filters[placeholder[0]] = new RegExp(stringUtil.escapeRegExp(placeholder[1]), "gi");
+            }
+        } else {
             filters = {
                 $or : [
-                    {content: new RegExp(escapeRegExp(search))},
-                    {name: new RegExp(escapeRegExp(search))}
+                    {content: new RegExp(stringUtil.escapeRegExp(search), "gi")},
+                    {name: new RegExp(stringUtil.escapeRegExp(search), "gi")}
                 ]
-            };
+            }; 
+        }
 
         models.Document.find(filters).limit(50).skip((page-1)*50).exec((err, documents) => {
             models.Document.count(filters, (err, total) => {
@@ -74,4 +86,3 @@ module.exports = {
         });
     }
 }
-

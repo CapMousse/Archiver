@@ -1,0 +1,29 @@
+extends ../index.jade
+
+block content
+    p.text-center
+        a.btn.btn-success(href="/tags/create") Create a tag
+    - if (tags.length)
+        table.table.table-striped
+            thead
+                th
+                th Name
+                th Filter
+                th Regexp
+                th
+            tbody
+                each tag in tags
+                    tr
+                        td
+                            a(href="/tags/delete/"+tag._id, onclick="return confirm('Are you sure to delete this tag ?')")
+                                i.fa.fa-trash
+                        td=tag.name
+                        td=tag.filter
+                        td=tag.isRegexp
+                        td.text-right
+                            a(href="/tags/scan/"+tag._id, onclick="return confirm('This operation can take time')").btn.btn-xs.btn-default scan
+
+        include ../mixins/pagination
+        +pagination(start, numPages, curr, base)
+    - else
+        div No documents found
