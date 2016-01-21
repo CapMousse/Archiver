@@ -41,6 +41,21 @@ If you want to automaticaly launch thoses at start, you can use `crontab` (`sudo
 @reboot /dir/to/archiver npm start
 ```
 
+## How it work
+
+Drop any PDF file in you `scanDir` directory and wait some time for the watcher to index and move the file in the `archiveDir`. It can take some time, depending of the file size.
+
+Go to `http://server-address:8000` to see all your files.
+
+You can search in all files content and name with the search form in the header. But you also can use filters to improve search results :
+- `content:anything in the content`
+- `name:anything in the title`
+- `tags:list,of,tags`
+- `content:all at name:the same tags:time`
+
+You can also define tags to be added automatically on file add or manually scan all files. Tag filters can be literal string or RegExp.
+**Warning:** manually scan all files for tags can take time !
+
 * * *
 
 This project is inspired from [paperless](https://github.com/danielquinn/paperless) from [@danielquinn](https://github.com/danielquinn)
