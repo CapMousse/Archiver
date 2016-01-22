@@ -6,5 +6,6 @@ module.exports = new Schema({
     fileName: String,
     dateCreation: { type: Date, default: Date.now },
     content: String,
-    tags: [String]
+    tags: [String],
+    type: String
 });

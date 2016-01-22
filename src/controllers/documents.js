@@ -1,4 +1,5 @@
 var fs          = require('fs'),
+    fileType    = require('file-type'),
     config      = require(__dirname + '/../../config.js'),
     db          = require(__dirname + '/../utils/mongodb.js'),
     models      = require(__dirname + '/../models'),
@@ -39,13 +40,17 @@ module.exports = {
             i = 0, 
             match, placeholder;
 
-        if (match = search.match(/([a-z]{1,}):([a-zA-Z0-9-_ ]+)/g)) {
+        if (match = search.match(/([a-z]{1,}):"([a-zA-Z0-9-_ ]+)"/ig)) {
             for (; i < match.length; i++) {
                 placeholder = match[i].split(":");
 
                 if (placeholder[0] == "tag") placeholder[0] = "tags"; 
                 if (placeholder[0] == "tags") placeholder[1] = placeholder[1].replace(",", "|");
-                filters[placeholder[0]] = new RegExp(stringUtil.escapeRegExp(placeholder[1]), "gi");
+                if (placeholder[0] == "type") {
+                    if (placeholder[1].match(/img|images?/ig)) placeholder[1] = "jpg|jpeg|png|bmp|gif";
+                    if (placeholder[1].match(/txt|md|text/ig)) placeholder[1] = "txt|md";
+                } 
+                filters[placeholder[0]] = new RegExp(stringUtil.escapeRegExp(placeholder[1]), "ig");
             }
         } else {
             filters = {
@@ -69,7 +74,14 @@ module.exports = {
             fs.readFile(config.archiveDir + '/' + document.fileName, (err, data) => {
                 if (err) return res.send('error');
 
-                res.contentType("application/pdf");
+                var type = fileType(data);
+
+                if (type == null) {
+                    res.contentType("text/plain");
+                } else {
+                    res.contentType(type.mime);
+                }
+
                 res.setHeader('Content-Disposition', 'attachement; filename="'+ document.fileName +'"');
                 res.send(data);
             });

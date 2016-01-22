@@ -9,11 +9,11 @@ block content
                 th Tags
                 th.hidden-xs Date
                 th.hidden-xs Content
-                th Open
+                th.text-center Open
             tbody
                 each document in documents
                     tr
-                        td.hidden-xs
+                        td.hidden-xs.text-center
                             a(href="/delete/"+document._id, onclick="return confirm('Are you sure to delete this document ?')")
                                 i.fa.fa-trash
                         td
@@ -29,7 +29,12 @@ block content
                         td.hidden-xs=document.content.substring(0, 50)+"..."
                         td.text-center
                             a(href="/download/"+document._id)
-                                i.fa.fa-file-pdf-o
+                                if document.type == "pdf"
+                                    i.fa.fa-file-pdf-o
+                                else if document.type.match(/jpg|jpeg|png|bmp|gif/gi)
+                                    i.fa.fa-file-image-o
+                                else
+                                    i.fa.fa-file-text-o
 
         include ../mixins/pagination
         +pagination(start, numPages, curr, base)

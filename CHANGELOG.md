@@ -1,5 +1,14 @@
 # Change Log
 
+## 0.4.0 - 2015-01-22
+### Added
+- Support for images files (jpg/png/gif/bmp)
+- Support for text files (text/md)
+- Filter by type of file : `filter:"png"`
+
+### Changed
+- Filters now use new format : `filter:"value"`
+
 ## 0.3.0 - 2015-01-20
 ### Added
 - Tags management
