@@ -34,7 +34,7 @@ module.exports = {
                 name:       req.body.name,
                 filter:     req.body.filter,
                 isRegexp:   !!req.body.regexp
-            }, function () {
+            }, () => {
                 res.redirect('/tags');
             })
         } else  {
@@ -46,8 +46,16 @@ module.exports = {
             backURL = req.header('Referer') || '/';
 
         models.Tag.findById(id, (err, tag) => {
-            tag.remove();
-            res.redirect(backURL);
+            models.Document.find({tags: { $in : [tag.name]}}, (err, documents) => {
+                for (var i = 0; i < documents.length; i++) {
+                    var index = documents[i].tags.indexOf(tag.name);
+                    documents[i].tags.splice(index, 1);
+                    documents[i].save();
+                }
+
+                tag.remove();
+                res.redirect(backURL);
+            });
         });
     },
     scan : (req, res) => {

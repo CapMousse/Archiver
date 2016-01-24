@@ -1,5 +1,10 @@
 # Change Log
 
+## 0.4.1 - 2015-01-24
+### Fixed
+- Deleting tags not delete tags from files
+- Search not working for tags
+
 ## 0.4.0 - 2015-01-22
 ### Added
 - Support for images files (jpg/png/gif/bmp)

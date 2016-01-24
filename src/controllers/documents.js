@@ -43,6 +43,7 @@ module.exports = {
         if (match = search.match(/([a-z]{1,}):"([a-zA-Z0-9-_ ]+)"/ig)) {
             for (; i < match.length; i++) {
                 placeholder = match[i].split(":");
+                placeholder[1] = placeholder[1].replace(/"/ig, '');
 
                 if (placeholder[0] == "tag") placeholder[0] = "tags"; 
                 if (placeholder[0] == "tags") placeholder[1] = placeholder[1].replace(",", "|");
