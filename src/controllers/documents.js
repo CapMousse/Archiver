@@ -40,7 +40,7 @@ module.exports = {
             i = 0, 
             match, placeholder;
 
-        if (match = search.match(/([a-z]{1,}):"([a-zA-Z0-9-_ ]+)"/ig)) {
+        if (match = search.match(/([a-z]{1,}):"([a-zA-Z0-9-_,| ]+)"/ig)) {
             for (; i < match.length; i++) {
                 placeholder = match[i].split(":");
                 placeholder[1] = placeholder[1].replace(/"/ig, '');

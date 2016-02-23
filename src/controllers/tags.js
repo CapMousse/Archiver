@@ -35,7 +35,7 @@ module.exports = {
                 filter:     req.body.filter,
                 isRegexp:   !!req.body.regexp
             }, () => {
-                res.redirect('/tags');
+                res.redirect(res.locals.rootUrl + '/tags');
             })
         } else  {
             res.render('tags/create');
@@ -43,7 +43,7 @@ module.exports = {
     },
     delete: (req, res) => {
         var id = req.params.tag,
-            backURL = req.header('Referer') || '/';
+            backURL = req.header('Referer') || res.locals.rootUrl + '/';
 
         models.Tag.findById(id, (err, tag) => {
             models.Document.find({tags: { $in : [tag.name]}}, (err, documents) => {

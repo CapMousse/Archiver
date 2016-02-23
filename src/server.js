@@ -6,18 +6,23 @@ var fs          = require('fs'),
     app         = express(),
     documents   = require(__dirname + '/controllers/documents.js'),
     tags        = require(__dirname + '/controllers/tags.js');
+ 
+app.set('views', __dirname+'/views');
+app.set('view engine', 'jade');
+app.locals.moment = require('moment');
+app.locals.rootUrl = config.rootUrl.replace(/\/+$/, '') || '';
 
 app.use(session({
     secret: 'archiver',
     resave: false,
     saveUninitialized: true
 }));
+app.use(function (req, res, next) {
+    res.locals.rootUrl = app.locals.rootUrl;
+    next();
+});
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-
-app.set('views', __dirname+'/views');
-app.set('view engine', 'jade');
-app.locals.moment = require('moment');
 
 app.get('/', documents.list);
 app.get('/page/:page', documents.list);

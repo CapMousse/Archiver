@@ -14,7 +14,7 @@ block content
                 each document in documents
                     tr
                         td.hidden-xs.text-center
-                            a(href="/delete/"+document._id, onclick="return confirm('Are you sure to delete this document ?')")
+                            a(href=rootUrl+"/delete/"+document._id, onclick="return confirm('Are you sure to delete this document ?')")
                                 i.fa.fa-trash
                         td
                             - if (document.name.length > 50)
@@ -28,7 +28,7 @@ block content
                         td.hidden-xs=moment(document.dateCreation).format("DD/MM/YYYY, HH:mm")
                         td.hidden-xs=document.content.substring(0, 50)+"..."
                         td.text-center
-                            a(href="/download/"+document._id)
+                            a(href=rootUrl+"/download/"+document._id)
                                 if document.type == "pdf"
                                     i.fa.fa-file-pdf-o
                                 else if document.type.match(/jpg|jpeg|png|bmp|gif/gi)
@@ -37,7 +37,7 @@ block content
                                     i.fa.fa-file-text-o
 
         include ../mixins/pagination
-        +pagination(start, numPages, curr, base)
+        +pagination(start, numPages, curr, rootUrl+base)
     - else
         div No documents found
 
@@ -48,7 +48,7 @@ block content
 
         for (var i = 0; i < tags.length; i++) {
             tags[i].addEventListener('click', function(event) {
-                searchInput.value = "tags:"+event.target.textContent;
+                searchInput.value = 'tags:"'+event.target.textContent+'"';
                 searchForm.submit();
             });
         }

@@ -25,6 +25,7 @@ npm install
 
 Copy the `config.example.js` as `config.js`, then in the `config.js` file :
 - Set `port` to the port you want to use for the web interface
+- Set `rootUrl` for the absolute url from root. Usefull when behind an alias. Default to `/`
 - Set `scanDir` to the directory where you will send new file to scan
 - Set `archiveDir` to the directory where you want *Archiver* to store all your files
 
@@ -32,7 +33,7 @@ All dir can be absolutes
 
 ## Launch
 
-- `npm run watch` to launche the document scanner
+- `npm run watch` to launch the document scanner
 - `npm start` to launch the web interface
 
 If you want to automaticaly launch thoses at start, you can use `crontab` (`sudo crontab -e`):
