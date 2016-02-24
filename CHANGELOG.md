@@ -1,5 +1,13 @@
 # Change Log
 
+## 0.4.3 - 2016-02-24
+### Fixed
+- watcher crash with file name cotaining spaces
+- watcher crash with faulty regexp
+
+### Changed
+- Stop force downloading archived files, use `express.static` instead
+
 ## 0.4.2 - 2016-02-23
 ### Fixed
 - search tags not working

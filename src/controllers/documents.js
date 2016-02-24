@@ -68,26 +68,6 @@ module.exports = {
             });
         });
     },
-    download: (req, res) => {
-        var id = req.params.file;
-
-        models.Document.findById(id, (err, document) => {
-            fs.readFile(config.archiveDir + '/' + document.fileName, (err, data) => {
-                if (err) return res.send('error');
-
-                var type = fileType(data);
-
-                if (type == null) {
-                    res.contentType("text/plain");
-                } else {
-                    res.contentType(type.mime);
-                }
-
-                res.setHeader('Content-Disposition', 'attachement; filename="'+ document.fileName +'"');
-                res.send(data);
-            });
-        });
-    },
     delete: (req, res) => {
         var id = req.params.file,
             backURL = req.header('Referer') || '/';

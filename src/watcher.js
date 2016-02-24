@@ -24,6 +24,9 @@ function createDocument (file, callback) {
 
             if (tag.isRegexp) {
                 regexp = tag.filter.match(/^\/(.*?)\/([gim]*)$/);
+                
+                if (!regexp) return;
+
                 regexp = new RegExp(regexp[1], regexp[2]);
             }
 
@@ -50,14 +53,14 @@ function createDocument (file, callback) {
                 return;
             }
 
-            fs.renameSync(file.filePath, file.newPath)
+            fs.renameSync(file.tmp, file.newPath)
             callback(null, document);
         });
     });
 }
 
 function getDataFromIMG (file, callback) {
-    childProcess.exec("tesseract " + file.filePath + " stdout", (error, stdout, stderr) => {
+    childProcess.exec("tesseract " + file.tmp + " stdout", (error, stdout, stderr) => {
         if (error) { return callback(stderr); }
 
         file.data = stdout;
@@ -75,10 +78,10 @@ function getDataFromTXT (file, callback) {
 }
 
 function getDataFromPDF (file, callback) {
-    childProcess.exec("convert -density 300 -depth 8 -type grayscale " + file.filePath + " " + file.tmp + ".png", (error, stdout, stderr) => {
+    childProcess.exec("convert -density 300 -depth 8 -type grayscale " + file.tmp + " " + file.tmp + "-convert.png", (error, stdout, stderr) => {
         if (error) { return callback(stderr); }
 
-        glob(tmpDir + "/**/" + file.date + '-' + file.format.name + "*", { nodir: true }, (err, files) => {
+        glob(tmpDir + "/**/" + file.filename + "-convert*", { nodir: true }, (err, files) => {
             var data = "", docTags = [];
 
             file.images = files;
@@ -97,13 +100,10 @@ watcher.on('add', (filePath, infos) => {
     var date = +(new Date),
         format = path.parse(filePath),
         file = {
-            filePath:   filePath,
-            date :      +(new Date),
-            format:     format,
-            filename:   date + '-' + format.base,
-            newPath:    config.archiveDir + '/' + date + '-' + format.base,
-            tmp:        tmpDir + "/" + date + '-' + format.name
-        }
+            filePath:       filePath,
+            date :          +(new Date),
+            format:         format,
+        },
         callback =  (err, document) => {
             if (err) {
                 console.log(err);
@@ -111,7 +111,14 @@ watcher.on('add', (filePath, infos) => {
             }
 
             console.log("Finish consuming "+file.format.base);
-        }
+        };
+
+    file.filename = date + '-' + format.base.replace(/ /g, '-');
+    file.newPath  = config.archiveDir + '/' + file.filename;
+    file.tmp      = tmpDir + "/" + file.filename;
+
+    //rename file to prevent space crash
+    fs.renameSync(file.filePath, tmpDir + '/' + file.filename);
 
     console.log("Consuming "+file.format.base);
 

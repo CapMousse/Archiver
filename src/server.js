@@ -23,13 +23,13 @@ app.use(function (req, res, next) {
 });
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
+app.use('/download', express.static(config.archiveDir)); 
 
 app.get('/', documents.list);
 app.get('/page/:page', documents.list);
 app.post('/search', documents.search);
 app.get('/search', documents.search);
 app.get('/search/page/:page', documents.search);
-app.get('/download/:file', documents.download);
 app.get('/delete/:file', documents.delete);
 
 app.get('/tags', tags.list);

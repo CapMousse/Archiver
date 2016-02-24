@@ -28,7 +28,7 @@ block content
                         td.hidden-xs=moment(document.dateCreation).format("DD/MM/YYYY, HH:mm")
                         td.hidden-xs=document.content.substring(0, 50)+"..."
                         td.text-center
-                            a(href=rootUrl+"/download/"+document._id)
+                            a(href=rootUrl+"/download/"+document.fileName)
                                 if document.type == "pdf"
                                     i.fa.fa-file-pdf-o
                                 else if document.type.match(/jpg|jpeg|png|bmp|gif/gi)
