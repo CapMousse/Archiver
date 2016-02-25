@@ -69,6 +69,8 @@ module.exports = {
         });
     },
     delete: (req, res) => {
+        if (!!req.headers['x-read-only']) return res.redirect('/');
+
         var id = req.params.file,
             backURL = req.header('Referer') || '/';
 

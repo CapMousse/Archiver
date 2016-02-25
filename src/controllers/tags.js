@@ -18,6 +18,8 @@ function render (res, total, page, tags) {
 
 module.exports = {
     list: (req, res) => {
+        if (!!req.headers['x-read-only']) return res.redirect('/');
+        
         var page = req.params.page || 1;
 
         req.session.search = "";
@@ -29,6 +31,8 @@ module.exports = {
         });
     },
     create:(req, res) => {
+        if (!!req.headers['x-read-only']) return res.redirect('/');
+        
         if (req.method == "POST") {
             models.Tag.create({
                 name:       req.body.name,
@@ -42,6 +46,8 @@ module.exports = {
         }
     },
     delete: (req, res) => {
+        if (!!req.headers['x-read-only']) return res.redirect('/');
+        
         var id = req.params.tag,
             backURL = req.header('Referer') || res.locals.rootUrl + '/';
 
@@ -59,6 +65,8 @@ module.exports = {
         });
     },
     scan : (req, res) => {
+        if (!!req.headers['x-read-only']) return res.redirect('/');
+        
         var id = req.params.tag,
             backURL = req.header('Referer') || '/';
 
@@ -71,6 +79,7 @@ module.exports = {
 
             if (tag.isRegexp) {
                 regexp = tag.filter.match(/^\/(.*?)\/([gim]*)$/);
+                if (!regexp) return;
                 filters.content = new RegExp(regexp[1], regexp[2]);
             }
 

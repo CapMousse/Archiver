@@ -19,6 +19,7 @@ app.use(session({
 }));
 app.use(function (req, res, next) {
     res.locals.rootUrl = app.locals.rootUrl;
+    res.locals.readOnly = !!req.headers['x-read-only'];
     next();
 });
 app.use(bodyParser.json());

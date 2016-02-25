@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.4.4 - 2016-02-25
+### Fixed
+- scanner crash with faulty regexp
+
+### Added
+- Read only mode
+
 ## 0.4.3 - 2016-02-24
 ### Fixed
 - watcher crash with file name cotaining spaces
@@ -11,6 +18,7 @@
 ## 0.4.2 - 2016-02-23
 ### Fixed
 - search tags not working
+
 ### Added
 - RootUrl for proxy server with alias
 

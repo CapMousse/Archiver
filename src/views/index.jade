@@ -20,9 +20,10 @@ html
                     form.navbar-form.navbar-left(action=rootUrl+"/search", method="post")
                         .form-group
                             input.form-control(type="search", placeholder="search", name="search", value=search)
-                    ul.nav.navbar-nav.navbar-right
-                        li
-                            a(href=rootUrl+"/tags") tags
+                    - if (!readOnly)
+                        ul.nav.navbar-nav.navbar-right
+                            li
+                                a(href=rootUrl+"/tags") tags
 
         block content
         script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js')

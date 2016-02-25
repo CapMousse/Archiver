@@ -4,7 +4,8 @@ block content
     - if (documents.length)
         table.table.table-striped
             thead
-                th.hidden-xs
+                - if (!readOnly)
+                    th.hidden-xs
                 th Name
                 th Tags
                 th.hidden-xs Date
@@ -13,9 +14,10 @@ block content
             tbody
                 each document in documents
                     tr
-                        td.hidden-xs.text-center
-                            a(href=rootUrl+"/delete/"+document._id, onclick="return confirm('Are you sure to delete this document ?')")
-                                i.fa.fa-trash
+                        - if (!readOnly)
+                            td.hidden-xs.text-center
+                                a(href=rootUrl+"/delete/"+document._id, onclick="return confirm('Are you sure to delete this document ?')")
+                                    i.fa.fa-trash
                         td
                             - if (document.name.length > 50)
                                 =document.name.substring(0, 47)+"..."

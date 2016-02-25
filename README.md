@@ -57,6 +57,15 @@ You can search in all files content and name with the search form in the header.
 You can also define tags to be added automatically on file add or manually scan all files. Tag filters can be literal string or RegExp.
 **Warning:** manually scan all files for tags can take time !
 
+## Read Only
+
+If you want to access Archiver on your personnal server from internet, you can add the `X-Read-Only` header to the proxy request to enable read only mode.
+This will prevent you (or other people) to delete files, tags...
+
+On nginx, add `proxy_set_header X-Read-Only true;` to your configuration.
+
+**Note:** if you put Archiver on the web, don't forget to protect it with a [basic auth](https://en.wikipedia.org/wiki/Basic_access_authentication)
+
 * * *
 
 This project is inspired from [paperless](https://github.com/danielquinn/paperless) from [@danielquinn](https://github.com/danielquinn)
