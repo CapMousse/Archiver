@@ -1,9 +1,10 @@
 var os           = require('os'),
     fs           = require('fs'),
     path         = require('path'),
-    childProcess = require('child_process')
+    childProcess = require('child_process'),
     glob         = require('glob'),
     chokidar     = require('chokidar'),
+    mv           = require('mv'),
     db           = require(__dirname + '/utils/mongodb.js'),
     models       = require(__dirname + '/models'),
     config       = require(__dirname + '/../config.js'),
@@ -53,8 +54,9 @@ function createDocument (file, callback) {
                 return;
             }
 
-            fs.renameSync(file.tmp, file.newPath)
-            callback(null, document);
+            mv(file.tmp, file.newPath, function (err) {
+                callback(null, document);
+            });
         });
     });
 }
@@ -118,24 +120,26 @@ watcher.on('add', (filePath, infos) => {
     file.tmp      = tmpDir + "/" + file.filename;
 
     //rename file to prevent space crash
-    fs.renameSync(file.filePath, tmpDir + '/' + file.filename);
+    mv(file.filePath, tmpDir + '/' + file.filename, function (err) {
+        if (err) throw err;
 
-    console.log("Consuming "+file.format.base);
+        console.log("Consuming "+file.format.base);
 
-    if (file.format.ext.indexOf("pdf") > -1) {
-        getDataFromPDF(file, callback);
-        return
-    }
+        if (file.format.ext.indexOf("pdf") > -1) {
+            getDataFromPDF(file, callback);
+            return
+        }
 
-    if (file.format.ext.match(/jpg|jpeg|png|bmp|gif/gi)) {
-        getDataFromIMG(file, callback);
-        return
-    }
+        if (file.format.ext.match(/jpg|jpeg|png|bmp|gif/gi)) {
+            getDataFromIMG(file, callback);
+            return
+        }
 
-    if (file.format.ext.match(/txt|md/gi)) {
-        getDataFromTXT(file, callback);
-        return
-    }
+        if (file.format.ext.match(/txt|md/gi)) {
+            getDataFromTXT(file, callback);
+            return
+        }
 
-    console.log(file.format.base+ " cannot be consumed. Check file type");
+        console.log(file.format.base+ " cannot be consumed. Check file type");
+    });
 });

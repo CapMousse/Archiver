@@ -1,5 +1,9 @@
 # Change Log
 
+## 0.4.5 - 2016-02-26
+### Fixed
+- crash file renameSync on `tpmfs` systems
+
 ## 0.4.4 - 2016-02-25
 ### Fixed
 - scanner crash with faulty regexp

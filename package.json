@@ -1,6 +1,6 @@
 {
   "name": "archiver",
-  "version": "0.4.4",
+  "version": "0.4.5",
   "description": "An utility to eradicate paper",
   "url": "https://github.com/CapMousse/Archiver",
   "bugs": {
@@ -30,6 +30,7 @@
     "glob": "^6.0.4",
     "jade": "^1.11.0",
     "moment": "^2.11.1",
-    "mongoose": "^4.3.6"
+    "mongoose": "^4.3.6",
+    "mv": "^2.1.1"
   }
 }
