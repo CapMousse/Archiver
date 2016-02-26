@@ -2,6 +2,8 @@
 
 *Archiver* is a tool to eradicate paper with minimal setup. It can store and search on your documents like bills, taxes, fines, loan ... or any PDF.
 
+![Archiver](http://img.shwaark.com/uploads/big/14564901958863.png)
+
 ## Warning
 
 **This project is not responsible for any data/paper loss.**
